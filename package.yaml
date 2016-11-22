@@ -109,6 +109,7 @@ library:
   - GitHub.Endpoints.Repos.Collaborators
   - GitHub.Endpoints.Repos.Comments
   - GitHub.Endpoints.Repos.Commits
+  - GitHub.Endpoints.Repos.Contents
   - GitHub.Endpoints.Repos.Forks
   - GitHub.Endpoints.Repos.Webhooks
   - GitHub.Endpoints.Repos.DeployKeys
@@ -170,6 +171,7 @@ tests:
     - unordered-containers
     - file-embed
     - hspec
+    - text
     when:
     - condition: flag(aeson-compat)
       then:

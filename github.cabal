@@ -141,6 +141,7 @@ library
     GitHub.Endpoints.Repos.Collaborators
     GitHub.Endpoints.Repos.Comments
     GitHub.Endpoints.Repos.Commits
+    GitHub.Endpoints.Repos.Contents
     GitHub.Endpoints.Repos.Forks
     GitHub.Endpoints.Repos.Webhooks
     GitHub.Endpoints.Repos.DeployKeys
@@ -149,7 +150,6 @@ library
     GitHub.Endpoints.Users.Followers
     GitHub.Request
   other-modules:
-    GitHub.Endpoints.Repos.Contents
     Paths_github
   default-language: Haskell2010
 
@@ -200,19 +200,10 @@ executable get-readme
 test-suite github-test
   default-language: Haskell2010
   type: exitcode-stdio-1.0
+  main-is: Spec.hs
   hs-source-dirs:
     spec
   other-extensions: TemplateHaskell
-  other-modules:
-    GitHub.ActivitySpec
-    GitHub.CommitsSpec
-    GitHub.IssuesSpec
-    GitHub.OrganizationsSpec
-    GitHub.PullRequestsSpec
-    GitHub.ReposSpec
-    GitHub.SearchSpec
-    GitHub.UsersSpec
-  main-is: Spec.hs
   ghc-options: -Wall
   build-depends:
     base,
@@ -221,10 +212,21 @@ test-suite github-test
     vector,
     unordered-containers,
     file-embed,
-    hspec
+    hspec,
+    text
   if flag(aeson-compat)
     build-depends:
       aeson-compat
   else
     build-depends:
       aeson-extra
+  other-modules:
+    GitHub.ActivitySpec
+    GitHub.CommitsSpec
+    GitHub.ContentsSpec
+    GitHub.IssuesSpec
+    GitHub.OrganizationsSpec
+    GitHub.PullRequestsSpec
+    GitHub.ReposSpec
+    GitHub.SearchSpec
+    GitHub.UsersSpec
