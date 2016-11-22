@@ -5,6 +5,7 @@
 --
 module GitHub.Data.Content where
 
+import GitHub.Data.GitData (GitCommit(..))
 import GitHub.Data.URL
 import GitHub.Internal.Prelude
 import Prelude ()
@@ -55,6 +56,24 @@ data ContentInfo = ContentInfo {
 instance NFData ContentInfo where rnf = genericRnf
 instance Binary ContentInfo
 
+-- | A new file to be committed to the repo.
+data NewFile = NewFile {
+    newFileMessage :: !Text
+  , newFileContent :: !Text
+  , newFileBranch :: !(Maybe Text)
+  } deriving (Show, Data, Typeable, Eq, Ord, Generic)
+
+-- | A file that has been successfully created on a repo.
+data CreatedFile = CreatedFile {
+    createdFileContent :: !ContentInfo
+  , createdFileCommit :: !GitCommit
+  } deriving (Show, Data, Typeable, Eq, Ord, Generic)
+
+data Author = Author {
+    authorName :: !Text
+  , authorEmail :: !Text
+  }
+
 instance FromJSON Content where
   parseJSON o@(Object _) = ContentFile <$> parseJSON o
   parseJSON (Array os) = ContentDirectory <$> traverse parseJSON os
@@ -87,3 +106,21 @@ instance FromJSON ContentInfo where
                 <*> o .: "url"
                 <*> o .: "git_url"
                 <*> o .: "html_url"
+
+instance ToJSON NewFile where
+    toJSON (NewFile msg content branch) = object
+        [ "message" .= msg
+        , "content" .= content
+        , "branch" .= branch
+        ]
+
+instance FromJSON NewFile where
+  parseJSON = withObject "NewFile" $ \o ->
+    NewFile <$> o .: "message"
+            <*> o .: "content"
+            <*> o .: "branch"
+
+instance FromJSON CreatedFile where
+  parseJSON = withObject "CreatedFile" $ \o ->
+    CreatedFile <$> o .: "content"
+                <*> o .: "commit"

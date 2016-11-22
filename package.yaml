@@ -191,10 +191,12 @@ flags:
 
 executables:
   get-readme:
-    main: GetReadme.hs
-    source-dirs: samples/Repos
+    main: CreateFile.hs
+    source-dirs: samples/Repos/Contents
     ghc-options: -Wall
     dependencies:
       - base
+      - base64-bytestring
+      - string-conversions
       - text
       - github

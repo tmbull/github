@@ -13,6 +13,7 @@ module GitHub.Endpoints.Repos.Contents (
     readmeFor',
 
     -- ** Create
+    createFile',
 
     -- ** Edit
 
@@ -29,6 +30,14 @@ import Prelude ()
 
 import qualified Data.Text.Encoding as TE
 
+-- | Create a file
+-- See <https://developer.github.com/v3/repos/contents/#create-a-file>
+createFile' :: Auth -> Name Owner -> Name Repo -> Text -> NewFile -> IO (Either Error CreatedFile)
+createFile' auth user repo path newFile = executeRequest auth $ createFileR user repo path newFile
+
+createFileR :: Name Owner -> Name Repo -> Text -> NewFile -> Request 'RW CreatedFile
+createFileR user repo path newFile =
+  command Put ["repos", toPathPart user, toPathPart repo, "contents", path] (encode newFile)
 
 -- | The contents of a file or directory in a repo, given the repo owner, name, and path to the file
 --
