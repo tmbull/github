@@ -166,12 +166,15 @@ tests:
     dependencies:
     - base
     - base-compat
+    - base64-bytestring
+    - bytestring
     - github
     - vector
     - unordered-containers
     - file-embed
     - hspec
     - text
+    - string-conversions
     when:
     - condition: flag(aeson-compat)
       then:
