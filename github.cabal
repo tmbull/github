@@ -161,6 +161,8 @@ executable get-readme
   build-depends:
     base,
     base64-bytestring,
+    bytestring,
+    regex-compat-tdfa,
     string-conversions,
     text,
     github

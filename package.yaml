@@ -197,6 +197,8 @@ executables:
     dependencies:
       - base
       - base64-bytestring
+      - bytestring
+      - regex-compat-tdfa
       - string-conversions
       - text
       - github
