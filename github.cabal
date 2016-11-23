@@ -154,7 +154,7 @@ library
   default-language: Haskell2010
 
 executable get-readme
-  main-is: CreateFile.hs
+  main-is: UpdateFile.hs
   hs-source-dirs:
     samples/Repos/Contents
   ghc-options: -Wall
@@ -164,6 +164,8 @@ executable get-readme
     string-conversions,
     text,
     github
+  other-modules:
+    CreateFile
   default-language: Haskell2010
 
 test-suite github-test

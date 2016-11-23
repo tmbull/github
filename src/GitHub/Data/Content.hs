@@ -63,6 +63,15 @@ data NewFile = NewFile {
   , newFileBranch :: !(Maybe Text)
   } deriving (Show, Data, Typeable, Eq, Ord, Generic)
 
+-- | A file to be updated on the repo.
+data UpdateFile = UpdateFile {
+    updateFileMessage :: !Text
+  , updateFileContent :: !Text
+  , updateFileBranch :: !(Maybe Text)
+  , updateFileSha :: !Text
+  } deriving (Show, Data, Typeable, Eq, Ord, Generic)
+
+
 -- | A file that has been successfully created on a repo.
 data CreatedFile = CreatedFile {
     createdFileContent :: !ContentInfo
@@ -119,6 +128,14 @@ instance FromJSON NewFile where
     NewFile <$> o .: "message"
             <*> o .: "content"
             <*> o .: "branch"
+
+instance ToJSON UpdateFile where
+    toJSON (UpdateFile msg content branch sha) = object
+        [ "message" .= msg
+        , "content" .= content
+        , "branch" .= branch
+        , "sha" .= sha
+        ]
 
 instance FromJSON CreatedFile where
   parseJSON = withObject "CreatedFile" $ \o ->

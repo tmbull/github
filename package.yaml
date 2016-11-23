@@ -191,7 +191,7 @@ flags:
 
 executables:
   get-readme:
-    main: CreateFile.hs
+    main: UpdateFile.hs
     source-dirs: samples/Repos/Contents
     ghc-options: -Wall
     dependencies:

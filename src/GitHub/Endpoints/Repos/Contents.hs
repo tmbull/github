@@ -16,6 +16,7 @@ module GitHub.Endpoints.Repos.Contents (
     createFile',
 
     -- ** Edit
+    updateFile',
 
     -- ** Delete
 
@@ -37,6 +38,15 @@ createFile' auth user repo path newFile = executeRequest auth $ createFileR user
 
 createFileR :: Name Owner -> Name Repo -> Text -> NewFile -> Request 'RW CreatedFile
 createFileR user repo path newFile =
+  command Put ["repos", toPathPart user, toPathPart repo, "contents", path] (encode newFile)
+
+-- | Update an existing file
+-- See <https://developer.github.com/v3/repos/contents/#update-a-file>
+updateFile' :: Auth -> Name Owner -> Name Repo -> Text -> UpdateFile -> IO (Either Error CreatedFile)
+updateFile' auth user repo path newFile = executeRequest auth $ updateFileR user repo path newFile
+
+updateFileR :: Name Owner -> Name Repo -> Text -> UpdateFile -> Request 'RW CreatedFile
+updateFileR user repo path newFile =
   command Put ["repos", toPathPart user, toPathPart repo, "contents", path] (encode newFile)
 
 -- | The contents of a file or directory in a repo, given the repo owner, name, and path to the file
